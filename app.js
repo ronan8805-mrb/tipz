@@ -42,11 +42,46 @@ function initScrollHeader() {
 }
 
 // Authentication & Gating
+function register(name, email, password) {
+    let accounts = JSON.parse(localStorage.getItem('diz_accounts')) || [];
+    if (accounts.some(acc => acc.email === email)) {
+        alert("An account already exists with this email address.");
+        return false;
+    }
+    const newUser = { name, email, password, tier: 'NONE' };
+    accounts.push(newUser);
+    localStorage.setItem('diz_accounts', JSON.stringify(accounts));
+    
+    // Auto login
+    localStorage.setItem('diz_user', JSON.stringify(newUser));
+    window.location.href = 'pricing.html';
+    return true;
+}
+
 function login(email, password, redirectUrl = 'dashboard.html') {
-    // Mock login
-    const user = { email: email, tier: email === 'dizadmin' ? 'ADMIN' : 'GOLD', name: 'Member' };
-    localStorage.setItem('diz_user', JSON.stringify(user));
-    window.location.href = redirectUrl;
+    if (email === 'dizadmin') {
+        if (password === 'admin') {
+            const adminUser = { email: email, tier: 'ADMIN', name: 'Diz Master' };
+            localStorage.setItem('diz_user', JSON.stringify(adminUser));
+            window.location.href = 'admin-dash.html';
+            return true;
+        } else {
+            alert('Invalid admin credentials.');
+            return false;
+        }
+    }
+
+    let accounts = JSON.parse(localStorage.getItem('diz_accounts')) || [];
+    const foundUser = accounts.find(acc => acc.email === email && acc.password === password);
+    
+    if (foundUser) {
+        localStorage.setItem('diz_user', JSON.stringify(foundUser));
+        window.location.href = redirectUrl;
+        return true;
+    } else {
+        alert('Invalid email or password. Please try again or create an account.');
+        return false;
+    }
 }
 
 function logout() {
@@ -62,7 +97,7 @@ function checkAuthGating() {
     if (lockOverlay && mainDash) {
         const user = JSON.parse(localStorage.getItem('diz_user'));
         
-        if (!user) {
+        if (!user || user.tier === 'NONE') {
             // Locked
             lockOverlay.classList.remove('hidden');
             mainDash.classList.add('dashboard-locked');
@@ -72,6 +107,22 @@ function checkAuthGating() {
             lockOverlay.classList.add('hidden');
             mainDash.classList.remove('dashboard-locked');
             if (userBadge) userBadge.textContent = user.tier + ' MEMBER';
+        }
+    }
+}
+
+function upgradeUser(newTier) {
+    const user = JSON.parse(localStorage.getItem('diz_user'));
+    if (user) {
+        user.tier = newTier.toUpperCase();
+        localStorage.setItem('diz_user', JSON.stringify(user));
+        
+        // Update in DB
+        let accounts = JSON.parse(localStorage.getItem('diz_accounts')) || [];
+        const accIndex = accounts.findIndex(acc => acc.email === user.email);
+        if (accIndex > -1) {
+            accounts[accIndex].tier = user.tier;
+            localStorage.setItem('diz_accounts', JSON.stringify(accounts));
         }
     }
 }

@@ -78,15 +78,13 @@
 
         document.getElementById('checkout-form').addEventListener('submit', (e) => {
             e.preventDefault();
-            // Upgrade user tier in mock db
             const userStr = localStorage.getItem('diz_user');
             if (userStr) {
-                const user = JSON.parse(userStr);
-                user.tier = tier ? tier.toUpperCase() : 'ELITE';
-                localStorage.setItem('diz_user', JSON.stringify(user));
+                upgradeUser(tier || 'ELITE');
             } else {
-                // Not logged in but checked out? Just force a login mock
-                login('user@example.com', 'pass', 'dashboard.html');
+                // Not logged in but checked out? Just force a mock login
+                alert('You must be logged in to checkout.');
+                window.location.href = 'login.html';
                 return;
             }
             alert('Payment Successful! Welcome to the Elite.');

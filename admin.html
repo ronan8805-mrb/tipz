@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group">
                     <label>Master Password</label>
-                    <input type="password" class="form-control" placeholder="••••••••" required>
+                    <input type="password" id="admin-password" class="form-control" placeholder="••••••••" required>
                 </div>
                 <button type="submit" class="btn-primary w-full mt-2">ACCESS CONTROL</button>
             </form>
@@ -36,11 +36,8 @@
         document.getElementById('admin-login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             const email = document.getElementById('login-email').value;
-            if (email === 'dizadmin') {
-                login(email, 'admin', 'admin-dash.html');
-            } else {
-                alert('Invalid Admin Credentials');
-            }
+            const password = document.getElementById('admin-password').value;
+            login(email, password, 'admin-dash.html');
         });
     </script>
 </body>
