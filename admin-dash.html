@@ -82,28 +82,18 @@
 
             <!-- SUBSCRIPTIONS TAB -->
             <div id="tab-sub" class="admin-tab hidden">
-                <h2 class="mb-3">MANAGE <span class="gold-text">SUBSCRIPTIONS</span></h2>
-                <div class="glass-dark p-4" style="padding: 2rem; overflow-x: auto;">
-                    <table style="width: 100%; text-align: left; border-collapse: collapse; min-width: 600px;">
-                        <thead>
-                            <tr style="border-bottom: 1px solid rgba(255,255,255,0.2);">
-                                <th style="padding: 1rem 0;">Name</th>
-                                <th>Email</th>
-                                <th>Tier</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-users-list">
-                            <!-- Injected by JS -->
-                        </tbody>
-                    </table>
+                <h2 class="mb-3 text-center">MANAGE <span class="gold-text">SUBSCRIPTIONS</span></h2>
+                <div class="glass-dark p-4" style="padding: 2rem; max-width: 800px; margin: 0 auto;">
+                    <div id="admin-users-list" class="users-list">
+                        <!-- Injected by JS -->
+                    </div>
                 </div>
             </div>
 
             <!-- CHAT MANAGEMENT TAB -->
             <div id="tab-chat" class="admin-tab hidden">
-                <h2 class="mb-3">CHAT <span class="gold-text">MODERATION</span></h2>
-                <div class="glass-dark p-4" style="padding: 2rem; text-align: center;">
+                <h2 class="mb-3 text-center">CHAT <span class="gold-text">MODERATION</span></h2>
+                <div class="glass-dark p-4" style="padding: 2rem; text-align: center; max-width: 600px; margin: 0 auto;">
                     <div style="font-size: 3rem; margin-bottom: 1rem;">💬</div>
                     <h3>Live Chat Controls</h3>
                     <p style="opacity: 0.7; margin-top: 1rem;">The real-time chat moderation socket is currently inactive.<br>Full chat logs and banning tools will appear here when the WebSocket server is connected.</p>
@@ -141,22 +131,59 @@
             const accounts = JSON.parse(localStorage.getItem('diz_accounts')) || [];
             
             if (accounts.length === 0) {
-                list.innerHTML = '<tr><td colspan="4" style="padding: 1rem 0; opacity: 0.7;">No registered users yet.</td></tr>';
+                list.innerHTML = '<div style="padding: 1rem 0; opacity: 0.7; text-align: center;">No registered users yet.</div>';
                 return;
             }
 
-            list.innerHTML = '';
+            list.innerHTML = `
+                <div class="user-list-header mobile-hide">
+                    <div>Name</div>
+                    <div>Email</div>
+                    <div>Tier</div>
+                    <div>Action</div>
+                </div>
+            `;
+            
             accounts.forEach((acc, i) => {
                 let tierClass = acc.tier === 'NONE' ? 'style="color:red"' : 'class="gold-text"';
                 list.innerHTML += `
-                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
-                        <td style="padding: 1rem 0;">${acc.name}</td>
-                        <td>${acc.email}</td>
-                        <td ${tierClass}>${acc.tier}</td>
-                        <td><button class="btn-secondary" style="padding: 0.3rem 0.8rem; font-size: 0.8rem;" onclick="alert('Manage user: ${acc.email}')">Manage</button></td>
-                    </tr>
+                    <div class="user-list-item">
+                        <div class="user-main-info" onclick="toggleUserDetails(${i})">
+                            <span class="user-name">${acc.name}</span>
+                            <span class="user-toggle mobile-only" id="toggle-icon-${i}">+</span>
+                        </div>
+                        <div class="user-details" id="user-details-${i}">
+                            <div class="desktop-cell mobile-hide" style="font-weight: bold;">
+                                ${acc.name}
+                            </div>
+                            <div class="desktop-cell mobile-detail">
+                                <span class="mobile-label mobile-only">Email</span>
+                                <span>${acc.email}</span>
+                            </div>
+                            <div class="desktop-cell mobile-detail">
+                                <span class="mobile-label mobile-only">Tier</span>
+                                <span ${tierClass} style="font-weight: bold;">${acc.tier}</span>
+                            </div>
+                            <div class="desktop-cell mobile-detail">
+                                <button class="btn-secondary btn-sm" onclick="alert('Manage user: ${acc.email}')">Manage</button>
+                            </div>
+                        </div>
+                    </div>
                 `;
             });
+        }
+
+        function toggleUserDetails(index) {
+            if (window.innerWidth > 992) return; // Only toggle on mobile
+            const details = document.getElementById(`user-details-${index}`);
+            const icon = document.getElementById(`toggle-icon-${index}`);
+            if (details.classList.contains('expanded')) {
+                details.classList.remove('expanded');
+                icon.textContent = '+';
+            } else {
+                details.classList.add('expanded');
+                icon.textContent = '-';
+            }
         }
 
         document.getElementById('tip-generator')?.addEventListener('submit', (e) => {
