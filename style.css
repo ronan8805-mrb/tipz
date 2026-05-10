@@ -576,7 +576,7 @@ footer {
         white-space: nowrap;
         padding: 0.5rem 1rem;
     }
-    .grid-2 {
+    .grid-2, .grid-3 {
         grid-template-columns: 1fr;
     }
 }
