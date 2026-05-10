@@ -39,28 +39,26 @@
             
             <!-- TIP GENERATOR TAB -->
             <div id="tab-tip" class="admin-tab">
-                <h2 class="mb-3">BROADCAST <span class="gold-text">TIP</span></h2>
+                <h2 class="mb-3 text-center">BROADCAST <span class="gold-text">TIP</span></h2>
                 
-                <div class="glass-dark p-4" style="padding: 2rem;">
+                <div class="glass-dark p-4" style="padding: 2rem; max-width: 600px; margin: 0 auto;">
                     <form id="tip-generator">
                         <div class="form-group">
                             <label>Event Title</label>
                             <input type="text" class="form-control" placeholder="e.g. Arsenal vs Liverpool" required>
                         </div>
                         
-                        <div class="odds-grid" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
-                            <div class="form-group" style="margin:0;">
-                                <label>Decimal Odds</label>
-                                <input type="number" step="0.01" class="form-control" placeholder="2.50">
-                            </div>
-                            <div class="form-group" style="margin:0;">
-                                <label>Fractional Odds</label>
-                                <input type="text" class="form-control" placeholder="6/4">
-                            </div>
-                            <div class="form-group" style="margin:0;">
-                                <label>Stake (Units)</label>
-                                <input type="number" class="form-control" placeholder="3" required>
-                            </div>
+                        <div class="form-group">
+                            <label>Decimal Odds</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="2.50">
+                        </div>
+                        <div class="form-group">
+                            <label>Fractional Odds</label>
+                            <input type="text" class="form-control" placeholder="6/4">
+                        </div>
+                        <div class="form-group">
+                            <label>Stake (Units)</label>
+                            <input type="number" class="form-control" placeholder="3" required>
                         </div>
 
                         <div class="form-group">

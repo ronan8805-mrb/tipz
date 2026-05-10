@@ -567,14 +567,14 @@ footer {
         display: none;
     }
     .sidebar-nav {
-        flex-direction: row;
-        overflow-x: auto;
+        flex-direction: column;
         margin-top: 0;
         gap: 0.5rem;
     }
     .sidebar-nav a {
-        white-space: nowrap;
-        padding: 0.5rem 1rem;
+        padding: 0.8rem 1rem;
+        text-align: center;
+        background: rgba(0,0,0,0.2);
     }
     .grid-2, .grid-3 {
         grid-template-columns: 1fr;
