@@ -648,6 +648,35 @@ footer {
     .mobile-hide {
         display: none !important;
     }
+    
+    /* Shrink elements so they fit perfectly on screen without wrapping off */
+    .glass-dark, .glass {
+        padding: 1.25rem !important;
+    }
+    .form-control {
+        padding: 0.75rem;
+        font-size: 0.9rem;
+    }
+    .form-group label {
+        font-size: 0.8rem;
+    }
+    .dashboard-layout {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .odds-grid {
+        gap: 0.4rem !important;
+    }
+    .odds-grid .form-control {
+        padding: 0.5rem;
+        font-size: 0.85rem;
+    }
+    .odds-grid label {
+        font-size: 0.7rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 }
 
 /* Fix hamburger animation */
