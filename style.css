@@ -558,7 +558,23 @@ footer {
         grid-template-columns: 1fr;
     }
     .sidebar {
-        display: none; /* Hide sidebar on mobile, use hamburger */
+        height: auto;
+        position: static;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    .sidebar h3 {
+        display: none;
+    }
+    .sidebar-nav {
+        flex-direction: row;
+        overflow-x: auto;
+        margin-top: 0;
+        gap: 0.5rem;
+    }
+    .sidebar-nav a {
+        white-space: nowrap;
+        padding: 0.5rem 1rem;
     }
     .grid-2 {
         grid-template-columns: 1fr;
