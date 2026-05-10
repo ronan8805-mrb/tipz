@@ -60,7 +60,7 @@ function register(name, email, password) {
 
 function login(email, password, redirectUrl = 'dashboard.html') {
     if (email === 'dizadmin') {
-        if (password === 'admin') {
+        if (password === 'dizadmin') {
             const adminUser = { email: email, tier: 'ADMIN', name: 'Diz Master' };
             localStorage.setItem('diz_user', JSON.stringify(adminUser));
             window.location.href = 'admin-dash.html';
