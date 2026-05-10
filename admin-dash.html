@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Admin Dashboard | DizTipz Elite</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo-text">DIZ MASTER CONTROL</div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">View Site</a>
+                <a href="dashboard.html">Member View</a>
+                <a href="#" onclick="logout()" class="btn-secondary" style="padding: 0.5rem 1rem;">Log Out</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="dashboard-layout">
+        
+        <aside class="sidebar mobile-hide">
+            <h3>MODERATION</h3>
+            <nav class="sidebar-nav">
+                <a href="#" class="active">Tip Generator</a>
+                <a href="#">Subscriptions</a>
+                <a href="#">Chat Management</a>
+            </nav>
+        </aside>
+
+        <section class="dashboard-content">
+            
+            <h2 class="mb-3">BROADCAST <span class="gold-text">TIP</span></h2>
+            
+            <div class="glass-dark p-4" style="padding: 2rem;">
+                <form id="tip-generator">
+                    <div class="form-group">
+                        <label>Event Title</label>
+                        <input type="text" class="form-control" placeholder="e.g. Arsenal vs Liverpool" required>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                        <div class="form-group" style="margin:0;">
+                            <label>Decimal Odds</label>
+                            <input type="number" step="0.01" class="form-control" placeholder="2.50">
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label>Fractional Odds</label>
+                            <input type="text" class="form-control" placeholder="6/4">
+                        </div>
+                        <div class="form-group" style="margin:0;">
+                            <label>Stake (Units)</label>
+                            <input type="number" class="form-control" placeholder="3" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Analysis / Content</label>
+                        <textarea class="form-control" rows="4" placeholder="Enter elite reasoning here..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Target Audience</label>
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal;"><input type="checkbox" checked> Gold</label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal;"><input type="checkbox" checked> Elite</label>
+                            <label style="display: flex; align-items: center; gap: 0.5rem; font-weight: normal;"><input type="checkbox" checked> VIP</label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-primary w-full mt-2">BROADCAST TO MEMBERS</button>
+                </form>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        const user = JSON.parse(localStorage.getItem('diz_user'));
+        if (!user || user.tier !== 'ADMIN') {
+            document.body.innerHTML = '<h1 style="text-align:center; margin-top:20vh; color:red;">UNAUTHORIZED ACCESS</h1>';
+        }
+
+        document.getElementById('tip-generator')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Tip successfully broadcasted to live feed!');
+            e.target.reset();
+        });
+    </script>
+</body>
+</html>

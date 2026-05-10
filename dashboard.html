@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Member Dashboard | DizTipz Elite</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo"><img src="Screenshot_2026-05-10_183738-removebg-preview.png" alt="DizTipz" style="height: 45px; width: auto; object-fit: contain; vertical-align: middle;"></a>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="nav-links">
+                <a href="index.html">Home</a>
+                <span id="user-tier-badge" style="background:var(--gold); color:var(--black); padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 900; font-size: 0.8rem;">MEMBER</span>
+                <a href="#" onclick="logout()" class="btn-secondary" style="padding: 0.5rem 1rem;">Log Out</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Locked Overlay for non-members -->
+    <div id="lock-overlay" class="hidden">
+        <h2 class="mb-2">ELITE ACCESS <span class="gold-text">LOCKED</span></h2>
+        <p class="mb-4">You need an active membership to view live tips, analytics, and join the community chat.</p>
+        <div style="font-size: 5rem; margin-bottom: 2rem;">🔒</div>
+        <a href="pricing.html" class="btn-primary">VIEW MEMBERSHIP PLANS</a>
+    </div>
+
+    <main class="dashboard-layout" id="dash-main-content">
+        
+        <aside class="sidebar mobile-hide">
+            <h3>PORTAL</h3>
+            <nav class="sidebar-nav">
+                <a href="#" class="active">Live Feed</a>
+                <a href="#">My Stats</a>
+                <a href="#">Bankroll Manager</a>
+                <a href="#">Settings</a>
+            </nav>
+        </aside>
+
+        <section class="dashboard-content">
+            
+            <div class="stats-strip">
+                <div class="glass-dark stat-box">
+                    <div class="label">Total Profit</div>
+                    <div class="value">+42.5u</div>
+                </div>
+                <div class="glass-dark stat-box">
+                    <div class="label">Strike Rate</div>
+                    <div class="value" style="color:var(--white)">78.4%</div>
+                </div>
+                <div class="glass-dark stat-box">
+                    <div class="label">Avg Odds</div>
+                    <div class="value" style="color:var(--white)">2.10</div>
+                </div>
+            </div>
+
+            <div class="grid-2" style="align-items: start;">
+                <!-- Feed -->
+                <div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 1rem;">
+                        <h2 style="font-size: 1.5rem;">DIZ LIVE FEED</h2>
+                        <div class="feed-filters">
+                            <button class="filter-btn active">ALL</button>
+                            <button class="filter-btn">FOOTBALL</button>
+                        </div>
+                    </div>
+                    
+                    <div id="tips-feed">
+                        <!-- injected by JS -->
+                    </div>
+                </div>
+
+                <!-- Chatroom -->
+                <div class="chatroom">
+                    <div style="padding: 1rem; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: bold;">
+                        # elite-chatroom
+                    </div>
+                    <div class="chat-messages">
+                        <div class="chat-msg">
+                            <div class="chat-avatar">JD</div>
+                            <div>
+                                <div style="font-weight:bold; font-size: 0.9rem;">JohnDoe <span style="font-size:0.7rem; opacity:0.5; font-weight:normal;">14:23</span></div>
+                                <div style="font-size: 0.95rem;">Holy boommmm! Diz on fire today 🔥</div>
+                            </div>
+                        </div>
+                        <div class="chat-msg">
+                            <div class="chat-avatar" style="background:var(--gold); color:black;">DIZ</div>
+                            <div>
+                                <div style="font-weight:bold; font-size: 0.9rem; color:var(--gold);">DizAdmin <span style="font-size:0.7rem; opacity:0.5; color:white; font-weight:normal;">14:25</span></div>
+                                <div style="font-size: 0.95rem;">Eyes open lads, another play coming in 10 mins.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" placeholder="Message #elite-chatroom...">
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Checkout | DizTipz Elite</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="display: flex; flex-direction: column; min-height: 100vh;">
+
+    <header>
+        <div class="container nav-container">
+            <a href="index.html" class="logo"><img src="Screenshot_2026-05-10_183738-removebg-preview.png" alt="DizTipz" style="height: 45px; width: auto; object-fit: contain; vertical-align: middle;"></a>
+        </div>
+    </header>
+
+    <main class="container" style="flex-grow: 1; padding-top: 120px; padding-bottom: 4rem;">
+        <h1 class="text-center mb-4">SECURE <span class="gold-text">CHECKOUT</span></h1>
+
+        <div class="grid-2" style="max-width: 1000px; margin: 0 auto; align-items: start;">
+            
+            <div class="glass p-4" style="padding: 2.5rem;">
+                <h3 class="mb-3">Payment Details</h3>
+                <form id="checkout-form">
+                    <div class="form-group">
+                        <label>Cardholder Name</label>
+                        <input type="text" class="form-control" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Card Number</label>
+                        <input type="text" class="form-control" placeholder="0000 0000 0000 0000" required>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div class="form-group">
+                            <label>Expiry</label>
+                            <input type="text" class="form-control" placeholder="MM/YY" required>
+                        </div>
+                        <div class="form-group">
+                            <label>CVC</label>
+                            <input type="text" class="form-control" placeholder="123" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary w-full mt-2">COMPLETE PURCHASE</button>
+                </form>
+            </div>
+
+            <div class="glass p-4" style="padding: 2.5rem; background: var(--primary-dark);">
+                <h3 class="mb-3">Order Summary</h3>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 1rem;">
+                    <span id="tier-name" style="font-weight: bold; font-size: 1.2rem;">Elite Membership</span>
+                    <span id="tier-price" style="font-weight: bold; font-size: 1.2rem; color: var(--gold);">£19.99</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-weight: 900; font-size: 1.5rem;">
+                    <span>Total Due Today</span>
+                    <span id="total-price" class="gold-text">£19.99</span>
+                </div>
+                <p style="font-size: 0.8rem; opacity: 0.7; margin-top: 1rem;">By completing this purchase, you agree to our Terms of Service. Billed monthly. Cancel anytime.</p>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+    <script>
+        // Very basic checkout logic based on URL params or default to Elite
+        const urlParams = new URLSearchParams(window.location.search);
+        const tier = urlParams.get('tier');
+        
+        let price = '£19.99';
+        let name = 'Elite Membership';
+        
+        if (tier === 'gold') { price = '£7.99'; name = 'Gold Membership'; }
+        else if (tier === 'vip') { price = '£49.99'; name = 'VIP Elite Membership'; }
+        
+        document.getElementById('tier-name').textContent = name;
+        document.getElementById('tier-price').textContent = price;
+        document.getElementById('total-price').textContent = price;
+
+        document.getElementById('checkout-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            // Upgrade user tier in mock db
+            const userStr = localStorage.getItem('diz_user');
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                user.tier = tier ? tier.toUpperCase() : 'ELITE';
+                localStorage.setItem('diz_user', JSON.stringify(user));
+            } else {
+                // Not logged in but checked out? Just force a login mock
+                login('user@example.com', 'pass', 'dashboard.html');
+                return;
+            }
+            alert('Payment Successful! Welcome to the Elite.');
+            window.location.href = 'dashboard.html';
+        });
+    </script>
+</body>
+</html>
